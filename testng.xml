@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Custom suite" parallel="false">
+  <test verbose="1" name="Testowanie" annotations="JDK">
+  
+  <groups>
+      <run>
+      <include name="chrome" />
+      </run>
+   </groups>
+  
+    <classes>
+      <class name="ReminderTest"/>
+      <class name="CalendarTest"/>
+      <class name="EventTest"/>
+      <class name="ImportExportTest"/>
+      <class name="BaseTest"/>
+      <class name="TestowkaTest"/>
+      <class name="BasicTest"/>
+    </classes>
+  </test>
+</suite>
