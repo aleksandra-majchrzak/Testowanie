@@ -7,17 +7,17 @@ import static org.testng.Assert.assertEquals;
  */
 public class ImportExportTest extends BaseTest{
 
-    @Test(groups = { "chrome"})//, "firefox", "opera", "safari" })
+    @Test(priority=2, groups = { "chrome"}, enabled = false)//, "firefox", "opera", "safari" })
     public void emptyTest1(){
         assertEquals(true, true);
     }
 
-    @Test(groups = { "chrome"})//, "firefox", "opera", "safari" })
+    @Test(priority=2, groups = { "chrome"}, enabled = false)//, "firefox", "opera", "safari" })
     public void emptyTest2(){
         assertEquals(true, true);
     }
 
-    @Test(groups = { "chrome"})//, "firefox", "opera", "safari" })
+    @Test(priority=2, groups = { "chrome"}, enabled = false)//, "firefox", "opera", "safari" })
     public void emptyTest3(){
         assertEquals(true, true);
     }

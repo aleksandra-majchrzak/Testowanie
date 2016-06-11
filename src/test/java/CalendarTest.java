@@ -1,12 +1,10 @@
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeTest;
-import org.testng.annotations.Test;
-
-import java.util.concurrent.TimeUnit;
+import org.testng.Assert;
+import org.testng.annotations.*;
 
 import static org.testng.Assert.assertEquals;
 
@@ -15,35 +13,35 @@ import static org.testng.Assert.assertEquals;
  */
 public class CalendarTest extends BaseTest{
 
-
+    @Parameters("browserType")
     @BeforeClass(alwaysRun = true)
-    public void setUp() throws Exception {
-        super.chromeSetUp();
-        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+    public void setUp(@Optional("chrome") String browserType) throws Exception {
+      //  super.setUp(browserType);
+ //       driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+
 
     }
 
-    @BeforeTest
+    @BeforeMethod(alwaysRun = true)
     public void setUpMainPage() throws Exception {
         driver.get("https://www.google.com/calendar");
 
     }
 
-  //  @Test(groups = { "chrome"})//, "firefox", "opera", "safari" })
     public void openNewCalendarSite() throws InterruptedException {
 
-        wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.id("clst_my_menu"))));
-        driver.findElement(By.id("clst_my_menu")).click();
+        wait.until(ExpectedConditions.visibilityOf(mp.calendarsListButton));
+        mp.click(mp.calendarsOptionButton);
         Thread.sleep(1000);
-        wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.id("addP"))));
+        wait.until(ExpectedConditions.visibilityOf(mp.calendarsOptionMenu));
         Thread.sleep(1000);
-        driver.findElement(By.cssSelector(".goog-menuitem-content:first-child")).click();
+        mp.click(mp.calendarsOptionMenuAddNew);
 
         Thread.sleep(1000);
     }
 
-    @Test(groups = { "chrome"})//, "firefox", "opera", "safari" })
-    public void CreateCalendarWithoutName() throws InterruptedException {
+    @Test(priority=2, groups = { "chrome"})//, "firefox", "opera", "safari" })
+    public void createCalendarWithoutName() throws InterruptedException {
         openNewCalendarSite();
 
         driver.findElement(By.id("settings_save_btn")).click();
@@ -52,8 +50,8 @@ public class CalendarTest extends BaseTest{
 
     }
 
-    @Test(groups = { "chrome"})//, "firefox", "opera", "safari" })
-    public void CreateCalendarWithName() throws InterruptedException {
+    @Test(priority=2, groups = { "chrome"})//, "firefox", "opera", "safari" })
+    public void createCalendarWithName() throws InterruptedException {
         openNewCalendarSite();
 
         String calendarName = "testowy";
@@ -65,10 +63,51 @@ public class CalendarTest extends BaseTest{
         Thread.sleep(1000);
 
         wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.id("nt2"))));   // pytanie czy id nie jest generowane jakos dynamicznie
-   //     assertEquals(wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.cssSelector(".calList .calRow .calListLabel span")))).getText(), calendarName);
+
+        assertEquals(mp.getCalendarRow(driver, calendarName).isDisplayed(), true);
+    }
+
+    @Test(priority=2, groups = { "chrome"})//, "firefox", "opera", "safari" })
+    public void deleteCalendar() throws InterruptedException {
+
+        String calendarName = "testowy";
+
+        if(! mp.calendarsList.isDisplayed())
+            mp.click(mp.calendarsListButton);
+
+
+        wait.until(ExpectedConditions.visibilityOf(mp.calendarsList));
+
+        WebElement hoverElement = mp.getCalendarRow(driver, calendarName);
+
+        Actions builder = new Actions(driver);
+        builder.moveToElement(hoverElement).perform();
+        builder.moveToElement(mp.getCalendarRowMenuButton(driver, calendarName))
+                .click()
+                .perform();
+
+        Thread.sleep(1000);
+
+        wait.until(ExpectedConditions.visibilityOf(mp.calendarOptionMenu));
+
+        mp.calendarOptionMenuEdit.click(); // zalezne od przegladarki?
+
+        wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.id("svalues"))));
+
+        driver.findElement(By.xpath("//*[@id='svalues']/tbody/tr[11]/td/div[1]/a")).click();
+
+        wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.id("se-dd-cb"))));
+
+        driver.findElement(By.id("se-dd-cb")).click();
+        driver.findElement(By.name("di_delete")).click();
+
+
+        // tu jest jeszcze dialog
+
+        //wait.until(ExpectedConditions.);
+        Assert.assertEquals(driver.getCurrentUrl(), "https://calendar.google.com/calendar/render#main_7");
+
 // problem bo mozesz miec kilka kalendarzy o tej samej nazwie - powinnas jeszcze sprawdzac komunikat o utworzeniu?
-        //driver.findElement(By.xpath("//div[contains(@class, 'calListLabel') and text() = '" + calendarName+"']"));
-        driver.findElement(By.xpath("//div[contains(@class, 'calListLabel')]/span[text() = '" + calendarName+"']"));
-//        assertEquals(true, true);
+
     }
 }

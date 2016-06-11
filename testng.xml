@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Custom suite" parallel="false">
-  <test verbose="1" name="Testowanie" annotations="JDK">
+<suite name="Custom suite" parallel="none">
+  <parameter name="browserType" value="chrome"></parameter>
+  <test verbose="1" name="Testowanie" annotations="JDK" preserve-order="true">
   
   <groups>
       <run>
@@ -10,13 +11,13 @@
    </groups>
   
     <classes>
-      <class name="ReminderTest"/>
-      <class name="CalendarTest"/>
-      <class name="EventTest"/>
-      <class name="ImportExportTest"/>
-      <class name="BaseTest"/>
-      <class name="TestowkaTest"/>
-      <class name="BasicTest"/>
+		<class name="BaseTest"/>
+		<class name="LoginTest"/>
+		<class name="CalendarTest"/> 
+		<class name="ImportExportTest"/>
+		<class name="ReminderTest"/>
+		<class name="EventTest"/>
+
     </classes>
   </test>
 </suite>
