@@ -1,0 +1,29 @@
+package pages;
+
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.testng.Assert;
+
+/**
+ * Created by Mohru on 12.06.2016.
+ */
+public class NewCalendarPage {
+
+    @FindBy(id="cnInput") public WebElement calendarName;
+    @FindBy(id="settings_save_btn") public WebElement createCalendarButton;
+
+    public void setText(WebElement element, String text){
+
+        element.clear();
+        element.sendKeys(text);
+        Assert.assertEquals(element.getAttribute("value"), text);
+    }
+
+    public void click(WebElement element){
+        element.click();
+    }
+
+    public void setCalendarName(String calendarNameString){
+        setText(calendarName,calendarNameString);
+    }
+}

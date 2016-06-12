@@ -30,12 +30,12 @@ public class CalendarTest extends BaseTest{
 
     public void openNewCalendarSite() throws InterruptedException {
 
-        wait.until(ExpectedConditions.visibilityOf(mp.calendarsListButton));
-        mp.click(mp.calendarsOptionButton);
+        wait.until(ExpectedConditions.visibilityOf(mainPage.calendarsListButton));
+        mainPage.click(mainPage.calendarsOptionButton);
         Thread.sleep(1000);
-        wait.until(ExpectedConditions.visibilityOf(mp.calendarsOptionMenu));
+        wait.until(ExpectedConditions.visibilityOf(mainPage.calendarsOptionMenu));
         Thread.sleep(1000);
-        mp.click(mp.calendarsOptionMenuAddNew);
+        mainPage.click(mainPage.calendarsOptionMenuAddNew);
 
         Thread.sleep(1000);
     }
@@ -56,15 +56,14 @@ public class CalendarTest extends BaseTest{
 
         String calendarName = "testowy";
 
-        driver.findElement(By.id("cnInput")).sendKeys(calendarName);
-
-        driver.findElement(By.id("settings_save_btn")).click();
+        newCalendarPage.setCalendarName(calendarName);
+        newCalendarPage.click(newCalendarPage.createCalendarButton);
 
         Thread.sleep(1000);
 
         wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.id("nt2"))));   // pytanie czy id nie jest generowane jakos dynamicznie
 
-        assertEquals(mp.getCalendarRow(driver, calendarName).isDisplayed(), true);
+        assertEquals(mainPage.getCalendarRow(driver, calendarName).isDisplayed(), true);
     }
 
     @Test(priority=2, groups = { "chrome"})//, "firefox", "opera", "safari" })
@@ -72,34 +71,34 @@ public class CalendarTest extends BaseTest{
 
         String calendarName = "testowy";
 
-        if(! mp.calendarsList.isDisplayed())
-            mp.click(mp.calendarsListButton);
+        if(! mainPage.calendarsList.isDisplayed())
+            mainPage.click(mainPage.calendarsListButton);
 
 
-        wait.until(ExpectedConditions.visibilityOf(mp.calendarsList));
+        wait.until(ExpectedConditions.visibilityOf(mainPage.calendarsList));
 
-        WebElement hoverElement = mp.getCalendarRow(driver, calendarName);
+        WebElement hoverElement = mainPage.getCalendarRow(driver, calendarName);
 
         Actions builder = new Actions(driver);
         builder.moveToElement(hoverElement).perform();
-        builder.moveToElement(mp.getCalendarRowMenuButton(driver, calendarName))
+        builder.moveToElement(mainPage.getCalendarRowMenuButton(driver, calendarName))
                 .click()
                 .perform();
 
         Thread.sleep(1000);
 
-        wait.until(ExpectedConditions.visibilityOf(mp.calendarOptionMenu));
+        wait.until(ExpectedConditions.visibilityOf(mainPage.calendarOptionMenu));
 
-        mp.calendarOptionMenuEdit.click(); // zalezne od przegladarki?
+        mainPage.calendarOptionMenuEdit.click(); // zalezne od przegladarki?
 
-        wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.id("svalues"))));
+        wait.until(ExpectedConditions.visibilityOf(editCalendarPage.calendarMenuOpionsList));
 
-        driver.findElement(By.xpath("//*[@id='svalues']/tbody/tr[11]/td/div[1]/a")).click();
+        editCalendarPage.deleteCalendarLink.click();
 
-        wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.id("se-dd-cb"))));
+        wait.until(ExpectedConditions.visibilityOf(editCalendarPage.deleteCalendarConfirmationButton));
 
-        driver.findElement(By.id("se-dd-cb")).click();
-        driver.findElement(By.name("di_delete")).click();
+        editCalendarPage.click(editCalendarPage.deleteCalendarConfirmationButton);
+        editCalendarPage.click(editCalendarPage.deleteCalendarButton);
 
 
         // tu jest jeszcze dialog

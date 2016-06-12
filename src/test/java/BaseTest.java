@@ -1,4 +1,5 @@
 
+import pages.EditCalendarPage;
 import pages.LoginPage;
 import pages.MainPage;
 import org.openqa.selenium.WebDriver;
@@ -8,6 +9,7 @@ import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.*;
+import pages.NewCalendarPage;
 
 import java.util.concurrent.TimeUnit;
 
@@ -18,8 +20,10 @@ public class BaseTest {
 
     static WebDriver driver;
     protected static WebDriverWait wait;
-    public static LoginPage lp;
-    public static MainPage mp;
+    public static LoginPage loginPage;
+    public static MainPage mainPage;
+    public static EditCalendarPage editCalendarPage;
+    public static NewCalendarPage newCalendarPage;
 
     @Parameters("browserType")
     @BeforeClass(alwaysRun=true, groups="chrome")
@@ -46,8 +50,10 @@ public class BaseTest {
 
         wait = new WebDriverWait(driver, 5);
 
-        lp = PageFactory.initElements(driver, LoginPage.class);
-        mp = PageFactory.initElements(driver, MainPage.class);
+        loginPage = PageFactory.initElements(driver, LoginPage.class);
+        mainPage = PageFactory.initElements(driver, MainPage.class);
+        editCalendarPage = PageFactory.initElements(driver, EditCalendarPage.class);
+        newCalendarPage = PageFactory.initElements(driver, NewCalendarPage.class);
     }
 /*
     @BeforeGroups(groups = { "firefox"})
