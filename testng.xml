@@ -11,12 +11,12 @@
    </groups>
   
     <classes>
-		<class name="BaseTest"/>
-		<class name="LoginTest"/>
-		<class name="CalendarTest"/> 
-		<class name="ImportExportTest"/>
-		<class name="ReminderTest"/>
-		<class name="EventTest"/>
+		<class name="tests.TestBase"/>
+		<class name="tests.LoginTest"/>
+		<class name="tests.CalendarTest"/>
+		<class name="tests.ImportExportTest"/>
+		<class name="tests.ReminderTest"/>
+		<class name="tests.EventTest"/>
 
     </classes>
   </test>

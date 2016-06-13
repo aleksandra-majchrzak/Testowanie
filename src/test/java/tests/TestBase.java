@@ -1,7 +1,6 @@
+package tests;
 
-import pages.EditCalendarPage;
-import pages.LoginPage;
-import pages.MainPage;
+import pages.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -9,21 +8,23 @@ import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.*;
-import pages.NewCalendarPage;
 
 import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Mohru on 2016-06-07.
  */
-public class BaseTest {
+public class TestBase {
 
     static WebDriver driver;
-    protected static WebDriverWait wait;
+    public static WebDriverWait wait;
     public static LoginPage loginPage;
     public static MainPage mainPage;
     public static EditCalendarPage editCalendarPage;
     public static NewCalendarPage newCalendarPage;
+    public static CalendarsSettingsPage calendarsSettingsPage;
+    public static EventPage eventPage;
+
 
     @Parameters("browserType")
     @BeforeClass(alwaysRun=true, groups="chrome")
@@ -54,6 +55,9 @@ public class BaseTest {
         mainPage = PageFactory.initElements(driver, MainPage.class);
         editCalendarPage = PageFactory.initElements(driver, EditCalendarPage.class);
         newCalendarPage = PageFactory.initElements(driver, NewCalendarPage.class);
+        calendarsSettingsPage = PageFactory.initElements(driver, CalendarsSettingsPage.class);
+        eventPage = PageFactory.initElements(driver, EventPage.class);
+        eventPage.setDriver(driver);
     }
 /*
     @BeforeGroups(groups = { "firefox"})

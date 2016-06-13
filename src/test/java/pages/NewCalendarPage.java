@@ -10,6 +10,8 @@ import org.testng.Assert;
 public class NewCalendarPage {
 
     @FindBy(id="cnInput") public WebElement calendarName;
+    @FindBy(id="descriptionInput") public WebElement calendarDescription;
+    @FindBy(id="locationInput") public WebElement calendarLocation;
     @FindBy(id="settings_save_btn") public WebElement createCalendarButton;
 
     public void setText(WebElement element, String text){
@@ -25,5 +27,13 @@ public class NewCalendarPage {
 
     public void setCalendarName(String calendarNameString){
         setText(calendarName,calendarNameString);
+    }
+
+    public void setCalendarDescription(String calendarDescriptionString){
+        setText(calendarDescription,calendarDescriptionString);
+    }
+
+    public void setCalendarLocation(String calendarLocationString){
+        setText(calendarLocation,calendarLocationString);
     }
 }

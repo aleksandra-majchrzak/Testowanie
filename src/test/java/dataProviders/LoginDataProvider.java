@@ -7,7 +7,7 @@ import org.testng.annotations.DataProvider;
  */
 public class LoginDataProvider {
 
-    @DataProvider(name="dane")
+    @DataProvider(name="daneExport")
     public static Object[][] dane() throws Exception{
 
         return new Object[][]{

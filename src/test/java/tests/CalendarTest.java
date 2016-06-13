@@ -1,7 +1,9 @@
+package tests;
 
+import dataProviders.CalendarDataProvider;
+import dataProviders.EventDataProvider;
+import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 import org.testng.annotations.*;
@@ -11,14 +13,11 @@ import static org.testng.Assert.assertEquals;
 /**
  * Created by Mohru on 2016-06-07.
  */
-public class CalendarTest extends BaseTest{
+public class CalendarTest extends TestBase {
 
     @Parameters("browserType")
     @BeforeClass(alwaysRun = true)
     public void setUp(@Optional("chrome") String browserType) throws Exception {
-      //  super.setUp(browserType);
- //       driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-
 
     }
 
@@ -31,15 +30,15 @@ public class CalendarTest extends BaseTest{
     public void openNewCalendarSite() throws InterruptedException {
 
         wait.until(ExpectedConditions.visibilityOf(mainPage.calendarsListButton));
-        mainPage.click(mainPage.calendarsOptionButton);
+        mainPage.calendarsOptionButton.click();
         Thread.sleep(1000);
         wait.until(ExpectedConditions.visibilityOf(mainPage.calendarsOptionMenu));
         Thread.sleep(1000);
-        mainPage.click(mainPage.calendarsOptionMenuAddNew);
+        mainPage.calendarsOptionMenuAddNew.click();
 
         Thread.sleep(1000);
     }
-
+/*
     @Test(priority=2, groups = { "chrome"})//, "firefox", "opera", "safari" })
     public void createCalendarWithoutName() throws InterruptedException {
         openNewCalendarSite();
@@ -49,61 +48,62 @@ public class CalendarTest extends BaseTest{
         assertEquals(wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.cssSelector(".cal-dialog")))).isDisplayed(), true);   //tu ewentualnie mozesz porownywac tekst
 
     }
+*/
 
-    @Test(priority=2, groups = { "chrome"})//, "firefox", "opera", "safari" })
-    public void createCalendarWithName() throws InterruptedException {
+    @Test(priority=2, groups="chrome", dataProviderClass= CalendarDataProvider.class, dataProvider= "calendarData")
+    public void createCalendar(String calendarName, String description, String location, String errorMsg ) throws InterruptedException {
+
         openNewCalendarSite();
 
-        String calendarName = "testowy";
-
         newCalendarPage.setCalendarName(calendarName);
-        newCalendarPage.click(newCalendarPage.createCalendarButton);
+        newCalendarPage.setCalendarDescription(description);
+        newCalendarPage.setCalendarLocation(location);
 
-        Thread.sleep(1000);
+        newCalendarPage.createCalendarButton.click();
 
-        wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.id("nt2"))));   // pytanie czy id nie jest generowane jakos dynamicznie
+        if (StringUtils.isBlank(errorMsg)) {
 
-        assertEquals(mainPage.getCalendarRow(driver, calendarName).isDisplayed(), true);
+            Thread.sleep(1000);
+
+            wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.id("nt2"))));   // pytanie czy id nie jest generowane jakos dynamicznie
+
+            assertEquals(mainPage.getCalendarRow(driver, calendarName).isDisplayed(), true);
+        }
+        else{
+
+            wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.cssSelector(".cal-dialog"))));
+
+            assertEquals(driver.findElement(By.cssSelector(".cal-dialog-content")).getText(), errorMsg);   //tu ewentualnie mozesz porownywac tekst
+        }
+
+
     }
 
     @Test(priority=2, groups = { "chrome"})//, "firefox", "opera", "safari" })
     public void deleteCalendar() throws InterruptedException {
 
-        String calendarName = "testowy";
+        String calendarName = "testowy2";
 
         if(! mainPage.calendarsList.isDisplayed())
-            mainPage.click(mainPage.calendarsListButton);
-
+            mainPage.calendarsListButton.click();
 
         wait.until(ExpectedConditions.visibilityOf(mainPage.calendarsList));
 
-        WebElement hoverElement = mainPage.getCalendarRow(driver, calendarName);
-
-        Actions builder = new Actions(driver);
-        builder.moveToElement(hoverElement).perform();
-        builder.moveToElement(mainPage.getCalendarRowMenuButton(driver, calendarName))
-                .click()
-                .perform();
+        mainPage.openCalendarSettings(driver, calendarName);
 
         Thread.sleep(1000);
 
-        wait.until(ExpectedConditions.visibilityOf(mainPage.calendarOptionMenu));
-
-        mainPage.calendarOptionMenuEdit.click(); // zalezne od przegladarki?
-
         wait.until(ExpectedConditions.visibilityOf(editCalendarPage.calendarMenuOpionsList));
 
-        editCalendarPage.deleteCalendarLink.click();
-
-        wait.until(ExpectedConditions.visibilityOf(editCalendarPage.deleteCalendarConfirmationButton));
-
-        editCalendarPage.click(editCalendarPage.deleteCalendarConfirmationButton);
-        editCalendarPage.click(editCalendarPage.deleteCalendarButton);
-
+        editCalendarPage.deleteCalendar();
 
         // tu jest jeszcze dialog
 
         //wait.until(ExpectedConditions.);
+
+        wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.id("nt2")) ));
+        wait.until(ExpectedConditions.invisibilityOfElementWithText(By.id("nt2"), "Usuwanie kalendarza...") );   // pytanie czy id nie jest generowane jakos dynamicznie
+
         Assert.assertEquals(driver.getCurrentUrl(), "https://calendar.google.com/calendar/render#main_7");
 
 // problem bo mozesz miec kilka kalendarzy o tej samej nazwie - powinnas jeszcze sprawdzac komunikat o utworzeniu?

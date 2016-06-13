@@ -1,3 +1,5 @@
+package tests;
+
 import dataProviders.LoginDataProvider;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -10,7 +12,7 @@ import org.testng.annotations.Test;
 /**
  * Created by Mohru on 11.06.2016.
  */
-public class LoginTest extends BaseTest{
+public class LoginTest extends TestBase {
 
     @Parameters("browserType")
     @BeforeClass(alwaysRun = true)

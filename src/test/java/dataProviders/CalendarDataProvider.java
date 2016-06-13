@@ -7,16 +7,16 @@ import org.testng.annotations.DataProvider;
  */
 public class CalendarDataProvider {
 
-    @DataProvider(name="calendar")
+    @DataProvider(name="calendarData")
     public static Object[][] dane() throws Exception{
 
         return new Object[][]{
-                {"","","Podaj adres e-mail.",null},
-                {"9879hggfdgsd","","Google nie rozpoznaje tego adresu e-mail.",null},
-                {"zlekonto6","",null,"Podaj hasło."},
-                {"zlekonto6","ks",null,"Podany przez Ciebie adres e-mail i hasło nie zgadzają się."},
-                {"zlekonto6","zlekonto66",null,null}//,
-                //{"coproject.example@gmail.com","co.example1",null,null}
+                /* calendarName, description, location, errorMessage */
+                {"","","", "Nie można utworzyć kalendarza bez nazwy"},
+                {"testowy","","", ""},
+                {"!@#$%^&*()_+{}|:\\\"<>?/.,l\\[[]=-","opis","Kraków", ""},
+                {"testowy2","","", ""}
+
         };
 
     }

@@ -1,3 +1,5 @@
+package tests;
+
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertEquals;
@@ -5,7 +7,7 @@ import static org.testng.Assert.assertEquals;
 /**
  * Created by Mohru on 2016-06-07.
  */
-public class ReminderTest  extends BaseTest{
+public class ReminderTest  extends TestBase {
 
     @Test(priority=3,groups = { "chrome"}, enabled = false)//, "firefox", "opera", "safari" })
     public void emptyTest1(){
