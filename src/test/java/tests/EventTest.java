@@ -25,7 +25,7 @@ public class EventTest  extends TestBase {
 
     }
 
-    @Test(priority=3, groups={"chrome", "firefox", "ie", "opera", "safari"}, dataProviderClass= EventDataProvider.class, dataProvider= "eventData", enabled = false)
+    @Test(priority=3, groups={"chrome", "firefox", "ie", "opera", "safari"}, dataProviderClass= EventDataProvider.class, dataProvider= "eventData")
     public void createEvent(String eventName, String startDate, String startTime, String endDate,
                             String endTime, String location, String calendarName, String description,
                             boolean isAllDay, boolean repeat, int repeatOption, int repeatFrequency,

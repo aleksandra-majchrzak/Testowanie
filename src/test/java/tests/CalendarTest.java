@@ -38,7 +38,7 @@ public class CalendarTest extends TestBase {
         Thread.sleep(1000);
     }
 
-    @Test(priority=2, groups={"chrome", "firefox", "ie", "opera", "safari"}, dataProviderClass= CalendarDataProvider.class, dataProvider= "calendarData", enabled = false)
+    @Test(priority=2, groups={"chrome", "firefox", "ie", "opera", "safari"}, dataProviderClass= CalendarDataProvider.class, dataProvider= "calendarData")
     public void createCalendar(String calendarName, String description, String location, String errorMsg ) throws InterruptedException {
 
         openNewCalendarSite();
@@ -53,7 +53,7 @@ public class CalendarTest extends TestBase {
 
             Thread.sleep(1000);
 
-            wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.id("nt2"))));   // pytanie czy id nie jest generowane jakos dynamicznie
+            wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.id("nt2"))));
 
             assertEquals(mainPage.getCalendarRow(driver, calendarName).isDisplayed(), true);
         }
@@ -61,13 +61,51 @@ public class CalendarTest extends TestBase {
 
             wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.cssSelector(".cal-dialog"))));
 
-            assertEquals(driver.findElement(By.cssSelector(".cal-dialog-content")).getText(), errorMsg);   //tu ewentualnie mozesz porownywac tekst
+            assertEquals(driver.findElement(By.cssSelector(".cal-dialog-content")).getText(), errorMsg);
         }
 
 
     }
 
-    @Test(priority=2, groups = { "chrome", "firefox", "ie", "opera", "safari"}, enabled = false)//, "firefox", "opera", "safari" })
+    @Test(priority=2, groups={"chrome", "firefox", "ie", "opera", "safari"}, dataProviderClass= CalendarDataProvider.class, dataProvider= "calendarEditData")
+    public void editCalendar(String oldCalendarName,String newCalendarName, String description, String location, String errorMsg ) throws InterruptedException {
+
+        if(! mainPage.calendarsList.isDisplayed())
+            mainPage.calendarsListButton.click();
+
+        wait.until(ExpectedConditions.visibilityOf(mainPage.calendarsList));
+
+        mainPage.openCalendarSettings(driver, oldCalendarName);
+
+        Thread.sleep(1000);
+
+        wait.until(ExpectedConditions.visibilityOf(editCalendarPage.calendarMenuOpionsList));
+
+        newCalendarPage.setCalendarName(newCalendarName);
+        newCalendarPage.setCalendarDescription(description);
+        newCalendarPage.setCalendarLocation(location);
+
+        newCalendarPage.createCalendarButton.click();
+
+        if (errorMsg == null || errorMsg.isEmpty()) {
+
+            Thread.sleep(1000);
+
+            wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.id("nt2"))));
+
+            assertEquals(mainPage.getCalendarRow(driver, newCalendarName).isDisplayed(), true);
+        }
+        else{
+
+            wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.cssSelector(".cal-dialog"))));
+
+            assertEquals(driver.findElement(By.cssSelector(".cal-dialog-content")).getText(), errorMsg);
+        }
+
+
+    }
+
+    @Test(priority=2, groups = { "chrome", "firefox", "ie", "opera", "safari"}/*, enabled = false*/)
     public void deleteCalendar() throws InterruptedException {
 
         String calendarName = "testowy2";

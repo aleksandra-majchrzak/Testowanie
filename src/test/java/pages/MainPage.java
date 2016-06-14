@@ -91,6 +91,7 @@ public class MainPage {
         CreateButton.click();
     }
 
+
     //DayView
     public void quickCreateEvent(String time, String title, String CalendarName, WebDriver driver) throws Exception{
 
@@ -140,6 +141,7 @@ public class MainPage {
         }
     }
 
+    //DayView
     public void checkEvent(String time, String title, String CalendarName, WebDriver driver) throws Exception{
 
         driver.findElement(By.id("mainlogo")).click();

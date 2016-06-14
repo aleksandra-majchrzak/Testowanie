@@ -14,9 +14,11 @@ public class LoginDataProvider {
                 /* email, haslo, error1, error2 */
                 {"","","Podaj adres e-mail.",null},
                 {"9879hggfdgsd","","Google nie rozpoznaje tego adresu e-mail.",null},
-                {"zlekonto6","",null,"Podaj hasło."},
-                {"zlekonto6","ks",null,"Podany przez Ciebie adres e-mail i hasło nie zgadzają się."},
+            //    {"zlekonto6","",null,"Podaj hasło."},
+            //    {"zlekonto6","ks",null,"Podany przez Ciebie adres e-mail i hasło nie zgadzają się."},
                 //{"zlekonto6","zlekonto66",null,null}
+                {"coproject.example","",null,"Podaj hasło."},
+                {"coproject.example","ruughfvbm",null,"Podany przez Ciebie adres e-mail i hasło nie zgadzają się."},
                 {"coproject.example","co.example1",null,null}
         };
 

@@ -25,7 +25,7 @@ public class ImportExportTest extends TestBase {
 
     }
 
-    @Test(priority=3, groups={"chrome", "firefox", "ie", "opera", "safari"}, dataProviderClass= ExportImportDataProvider.class, dataProvider= "daneExport", enabled = false)
+    @Test(priority=3, groups={"chrome", "firefox", "ie", "opera", "safari"}, dataProviderClass= ExportImportDataProvider.class, dataProvider= "daneExport")
     public void ExportCalendarTest(String calendarName, String exportPath, String fileName) throws Exception{
 
         if (!mainPage.calendarsList.isDisplayed())
@@ -40,7 +40,7 @@ public class ImportExportTest extends TestBase {
 
     }
 
-    @Test(priority=3, groups={"chrome", "firefox", "ie", "opera", "safari"}, dataProviderClass= ExportImportDataProvider.class, dataProvider= "daneImport", enabled = false)
+    @Test(priority=3, groups={"chrome", "firefox", "ie", "opera", "safari"}, dataProviderClass= ExportImportDataProvider.class, dataProvider= "daneImport")
     public void ImportCalendarTest(String fileName, String calendarName, String info) throws Exception{
 
         mainPage.openCalendarsSettings();
