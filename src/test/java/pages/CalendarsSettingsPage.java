@@ -16,7 +16,6 @@ import java.awt.event.KeyEvent;
 public class CalendarsSettingsPage {
 
     @FindBy(xpath=".//*[@id='calSettingsWrapper']/table/tbody[2]/tr/td/table/tbody/tr/td[1]/nobr/a[1]") public WebElement importCalendarLink;
-//    @FindBy (xpath="//html/body/div[15]/div[2]/form/table/tbody/tr[1]/td/div[1]/input") public WebElement selectImportDirectoryButton;
     @FindBy (xpath="//html/body/div[@class='static-form-dialog']/div[2]/form/table/tbody/tr[1]/td/div[1]/input[@class='gc-dialoginput']") public WebElement selectImportDirectoryButton;
     @FindBy (xpath="//html/body/div[@class='static-form-dialog']/div[2]/form/table/tbody/tr[3]/td/div[1]/select") public WebElement importCalendarSelect;
     @FindBy (xpath="//html/body/div[@class='static-form-dialog']/div[2]/form/table/tbody/tr[3]/td/div[@class='gc-dialogrow']/button[@class='gc-dialogbold']") public WebElement importCalendarButton;
@@ -56,7 +55,5 @@ public class CalendarsSettingsPage {
         robot.keyPress(KeyEvent.VK_C);
         robot.keyPress(KeyEvent.VK_S);
         robot.keyPress(KeyEvent.VK_ENTER);
-
-        //KeyEvent.VK_UNDERSCORE;
     }
 }

@@ -1,5 +1,6 @@
 package tests;
 
+import org.openqa.selenium.safari.SafariDriver;
 import pages.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -27,7 +28,7 @@ public class TestBase {
 
 
     @Parameters("browserType")
-    @BeforeClass(alwaysRun=true, groups="chrome")
+    @BeforeClass(alwaysRun=true, groups={"chrome", "firefox", "ie", "opera", "safari"})
     public void setUp(@Optional("chrome") String browserType) throws Exception{
 
         switch(browserType){
@@ -39,11 +40,15 @@ public class TestBase {
                 driver = new FirefoxDriver();
                 break;
             case "ie":
+                System.setProperty("webdriver.ie.driver","C:\\Program Files\\Internet Explorer\\selenium-driver\\IEDriverServer_Win32_2.53.1\\IEDriverServer.exe");
                 driver = new InternetExplorerDriver();
                 break;
             case "opera":
-                // jakies dodatkowe ustawienia pod opere
+                // potrzebne dodatkowe ustawienie pod Opere
                 driver = new ChromeDriver();
+                break;
+            case "safari":
+                driver = new SafariDriver();
                 break;
         }
 
@@ -59,17 +64,9 @@ public class TestBase {
         eventPage = PageFactory.initElements(driver, EventPage.class);
         eventPage.setDriver(driver);
     }
-/*
-    @BeforeGroups(groups = { "firefox"})
-    public void fireFoxSetUp() {
-
-        //System.setProperty("webdriver.chrome.driver","C:\\Program Files (x86)\\Google\\chromedriver.exe");
-        driver = new FirefoxDriver();
-    }
-*/
 
 
-    @AfterGroups(groups = { "chrome", "firefox", "safari", "opera"})
+    @AfterGroups(groups = { "chrome", "firefox", "safari", "opera", "ie"})
     public static void tearDown2() {
         driver.quit();
     }

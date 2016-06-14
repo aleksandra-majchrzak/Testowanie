@@ -1,12 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="Custom suite" parallel="none">
-  <parameter name="browserType" value="chrome"></parameter>
+
   <test verbose="1" name="Testowanie" annotations="JDK" preserve-order="true">
-  
+      <parameter name="browserType" value="chrome"></parameter>
   <groups>
       <run>
       <include name="chrome" />
+      </run>
+   </groups>
+  
+    <classes>
+		<class name="tests.TestBase"/>
+		<class name="tests.LoginTest"/>
+		<class name="tests.CalendarTest"/>
+		<class name="tests.ImportExportTest"/>
+		<class name="tests.ReminderTest"/>
+		<class name="tests.EventTest"/>
+
+    </classes>
+  </test>
+  
+
+  <test verbose="1" name="Testowanie2" annotations="JDK" preserve-order="true">
+      <parameter name="browserType" value="firefox"></parameter>
+  <groups>
+      <run>
+      <include name="firefox" />
+      </run>
+   </groups>
+  
+    <classes>
+		<class name="tests.TestBase"/>
+		<class name="tests.LoginTest"/>
+		<class name="tests.CalendarTest"/>
+		<class name="tests.ImportExportTest"/>
+		<class name="tests.ReminderTest"/>
+		<class name="tests.EventTest"/>
+
+    </classes>
+  </test>
+  
+
+  <test verbose="1" name="Testowanie3" annotations="JDK" preserve-order="true">
+      <parameter name="browserType" value="ie"></parameter>
+  <groups>
+      <run>
+      <include name="ie" />
       </run>
    </groups>
   

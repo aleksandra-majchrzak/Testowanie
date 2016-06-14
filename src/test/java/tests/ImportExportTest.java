@@ -25,7 +25,7 @@ public class ImportExportTest extends TestBase {
 
     }
 
-    @Test(priority=3, groups="chrome", dataProviderClass= ExportImportDataProvider.class, dataProvider= "daneExport" , enabled = false)
+    @Test(priority=3, groups={"chrome", "firefox", "ie", "opera", "safari"}, dataProviderClass= ExportImportDataProvider.class, dataProvider= "daneExport", enabled = false)
     public void ExportCalendarTest(String calendarName, String exportPath, String fileName) throws Exception{
 
         if (!mainPage.calendarsList.isDisplayed())
@@ -34,16 +34,17 @@ public class ImportExportTest extends TestBase {
         wait.until(ExpectedConditions.visibilityOf(mainPage.calendarsList));
         mainPage.openCalendarSettings(driver, calendarName);
         wait.until(ExpectedConditions.visibilityOf(editCalendarPage.calendarMenuOpionsList));
-        driver.findElement(By.cssSelector("[title='Eksportuj ten kalendarz'")).click();             // to by sie przydalo jakos zmienic
+        driver.findElement(By.cssSelector("[title='Eksportuj ten kalendarz'")).click();
         Thread.sleep(3000);
         Assert.assertTrue(editCalendarPage.isFileExported(exportPath, fileName), "Fail");
 
     }
 
-    @Test(priority=3, groups="chrome", dataProviderClass= ExportImportDataProvider.class, dataProvider= "daneImport", enabled = false)
+    @Test(priority=3, groups={"chrome", "firefox", "ie", "opera", "safari"}, dataProviderClass= ExportImportDataProvider.class, dataProvider= "daneImport", enabled = false)
     public void ImportCalendarTest(String fileName, String calendarName, String info) throws Exception{
 
         mainPage.openCalendarsSettings();
+        Thread.sleep(1000);
         calendarsSettingsPage.startImport();
         calendarsSettingsPage.insertFileName(fileName);
         calendarsSettingsPage.finishImport(calendarName, info);

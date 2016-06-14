@@ -1,7 +1,6 @@
 package tests;
 
 import dataProviders.LoginDataProvider;
-import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
@@ -23,7 +22,7 @@ public class LoginTest extends TestBase {
 
     }
 
-    @Test(priority=1, groups="chrome", dataProviderClass= LoginDataProvider.class, dataProvider="dane")
+    @Test(priority=1, groups={"chrome", "firefox", "ie", "opera", "safari"}, dataProviderClass= LoginDataProvider.class, dataProvider="dane")
 
     public void LogIn_Test(String email, String pass, String errortxt1, String errortxt2) throws Exception{
 
@@ -33,25 +32,26 @@ public class LoginTest extends TestBase {
         loginPage.setEmail(email);
         loginPage.clickNext();
 
-        if (StringUtils.isBlank(errortxt1)){
+        Thread.sleep(100);
+
+        if (errortxt1 == null || errortxt1.isEmpty()){
 
             wait.until(ExpectedConditions.visibilityOf(loginPage.PasswdField));
             loginPage.setPassword(pass);
             loginPage.clickSignIn();
 
-            if (StringUtils.isBlank(errortxt2)){
+            if (errortxt2 == null || errortxt2.isEmpty()){
                 wait.until(ExpectedConditions.visibilityOf(loginPage.Logo));
                 Assert.assertEquals(driver.getCurrentUrl(), "https://calendar.google.com/calendar/render#main_7");
 
             }else{
-
-                Assert.assertTrue(loginPage.chceckError2(errortxt2), "Excepted error :)");
+                Assert.assertTrue(loginPage.chceckError2(errortxt2), "Excepted error  "+ errortxt2+ " but got " +loginPage.Error2.getText());
 
             }
 
         }else{
+            Assert.assertTrue(loginPage.chceckError1(errortxt1), "Excepted error  "+ errortxt1+ " but got " +loginPage.Error1.getText());
 
-            Assert.assertTrue(loginPage.chceckError1(errortxt1), "Excepted error :)");
 
         }
 

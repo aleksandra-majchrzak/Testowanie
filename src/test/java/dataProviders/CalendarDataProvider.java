@@ -14,6 +14,7 @@ public class CalendarDataProvider {
                 /* calendarName, description, location, errorMessage */
                 {"","","", "Nie można utworzyć kalendarza bez nazwy"},
                 {"testowy","","", ""},
+                {"Jan","","", ""},
                 {"!@#$%^&*()_+{}|:\\\"<>?/.,l\\[[]=-","opis","Kraków", ""},
                 {"testowy2","","", ""}
 

@@ -17,10 +17,6 @@ public class EditCalendarPage {
     @FindBy(id="se-dd-cb") public WebElement deleteCalendarConfirmationButton;
     @FindBy(name="di_delete") public WebElement deleteCalendarButton;
 
-    public void click(WebElement element){
-        element.click();
-    }
-
     public void deleteCalendar(){
 
         deleteCalendarLink.click();

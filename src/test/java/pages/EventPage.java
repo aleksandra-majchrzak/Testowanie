@@ -10,10 +10,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 
-import java.awt.*;
-import java.awt.event.KeyEvent;
 import  java.util.List;
-import java.util.StringTokenizer;
 
 import static tests.TestBase.wait;
 
@@ -93,7 +90,6 @@ public class EventPage {
         driver.findElement(By.cssSelector("[id$='endson_until_input']")).click();
         DoneButton.click();
         Assert.assertTrue(RepeatCheckbox.isSelected());
-        //Assert.assertEquals(Summary.getAttribute("value"), text); -> zwraca null :(
     }
 
     public void setLocation(String text) throws Exception{
@@ -103,11 +99,7 @@ public class EventPage {
 
         Actions action = new Actions(driver);
         action.sendKeys(Keys.ARROW_DOWN).sendKeys(Keys.ENTER).perform();
-/*
-        Robot robot = new Robot();
-        robot.keyPress(KeyEvent.VK_DOWN);
-        robot.keyPress(KeyEvent.VK_ENTER);
-        */
+
     }
 
     public void setCalendar(String text) throws Exception{
@@ -155,7 +147,7 @@ public class EventPage {
             if (option.isDisplayed() && value.equals(option.getText())) {
                 option.click();
                 return true;
-            } //else System.out.println("blebleble");
+            }
         }
 
         return false;

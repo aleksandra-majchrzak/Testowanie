@@ -12,6 +12,7 @@ public class ExportImportDataProvider extends TestBase{
     public static Object[][] daneExport() throws Exception{
 
         return new Object[][]{
+                /* koniecznosc zdefiniowania lokalnego dla maszyny */
                 {"testowy","C:\\Users\\Mohru\\Downloads","zlekonto6@gmail.com.ical.zip"}
         };
 
